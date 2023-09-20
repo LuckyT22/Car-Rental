@@ -1,9 +1,99 @@
 ﻿@page "/"
+@using Car_Rental.Buisness.Classes
+@using Car_Rental.Common.Interfaces
+@using Car_Rental.Common.Enums
+@inject BookingProcessor bp
 
 <PageTitle>Car Rental</PageTitle>
 
-<h1>Car Rental</h1>
+<h1>Car Rental Assignment</h1>
 
+<div class="row">
 
+<h6>Vehicles</h6>
+    
+<table class="table">
+        <thead>
+            <tr>
+                <th>RegNo</th>
+                <th>Make</th>
+                <th>Odometer</th>
+                <th>Cost Km</th>
+                <th>Vehicle Type</th>
+                <th>$ Day</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+    <tbody>
+        @foreach (var Car in bp.GetVehicles())
+            {
+            <tr>
+            <th>@Car.regNum</th>
+            <td>@Car.make</td>
+            <td>@Car.odometer</td>
+            <td>@Car.costKM</td>
+            <td>@Car.vehicleType</td>
+            <td>@Car.dailyCost</td>
+            <td>
+                        <button class="btn btn-success">Available</button>
+            </td>
+            </tr>
+            }
+                
+    </tbody>
+</table>
+</div>
+<br />
+<div class="row">
 
+<h6>Bookings</h6>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>RegNo</th>
+            <th>Customer</th>
+            <th>Km Rented</th>
+            <th>Km Returned</th>
+            <th>Rented</th>
+            <th>Returned</th>
+            <th>Cost</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>ABC123</th>
+            <td>John Doe(12345)</td>
+            <td>1000</td>
+            <td></td>
+            <td>9/9/2023</td>
+            <td></td>
+            <td></td>
+            <td>Available</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<br />
+<div class="row">
+
+<h6>Customers</h6>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>SSN</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>12345</th>
+            <td>Doe</td>
+            <td>John</td>
+        </tr>
+    </tbody>
+</table>
+</div>
