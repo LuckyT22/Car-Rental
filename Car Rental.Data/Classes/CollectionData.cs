@@ -2,6 +2,7 @@
 using Car_Rental.Common.Enums;
 using Car_Rental.Common.Classes;
 using Car_Rental.Data.Interfaces;
+using System;
 
 namespace Car_Rental.Data.Classes;
 
@@ -20,7 +21,10 @@ public class collectionData : IData
         _vehicles.Add(new Car("GHI789", "Tesla", 1000, 3, "Sedan", 100));
         _vehicles.Add(new Car("JKL012", "Jeep", 5000, 1.5, "Van", 300));
         _vehicles.Add(new Motorcycle("MNO234", "Yamaha", 30000, 0.5, "Motorcycle", 50));
-        _bookings.Add(new Booking());
+        _bookings.Add(new Booking("GHI789", "Doe John (12345)", 1000, null, DateTime.Now.ToString("d/M/yyyy"), null, null, true));
+        _bookings.Add(new Booking("GHI789", "Doe Jane (98765)", 5000, 5000, DateTime.Now.ToString("d/M/yyyy"), null, 300, true));
+        _persons.Add(new Customer("John", "Doe", 12345));
+        _persons.Add(new Customer("Jane", "Doe", 98765));
     }
 
     public IEnumerable<IPerson> GetPersons() => _persons;

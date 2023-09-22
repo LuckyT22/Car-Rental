@@ -62,16 +62,20 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th>ABC123</th>
-            <td>John Doe(12345)</td>
-            <td>1000</td>
-            <td></td>
-            <td>9/9/2023</td>
-            <td></td>
-            <td></td>
-            <td>Available</td>
-        </tr>
+            @foreach (var Booking in bp.GetBookings())
+            {
+                
+                <tr>
+                    <th>@Booking.RegNum</th>
+                    <td>@Booking.Customer</td>
+                    <td>@Booking.KmRented</td>
+                    <td>@Booking.KmReturned</td>
+                    <td>@Booking.RentedDate</td>
+                    <td>@Booking.ReturnDate</td>
+                    <td>@Booking.Cost</td>
+                    <td>@Booking.Status</td>
+                </tr>
+            }
     </tbody>
 </table>
 </div>
@@ -89,11 +93,15 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th>12345</th>
-            <td>Doe</td>
-            <td>John</td>
-        </tr>
+            @foreach (var Customer in bp.GetCustomers())
+            {
+                <tr>
+                    <th>@Customer.SSN</th>
+                    <td>@Customer.LastName</td>
+                    <td>@Customer.FirstName</td>
+                </tr>
+                
+            }
     </tbody>
 </table>
 </div>

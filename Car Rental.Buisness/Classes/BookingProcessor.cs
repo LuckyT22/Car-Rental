@@ -14,13 +14,16 @@ public class BookingProcessor
     {
         _db = new collectionData();
     }
-    //public IEnumerable<Customer> GetCustomers()
-    //{
-
-    //}
+    public IEnumerable<IPerson> GetCustomers()
+    {
+        return _db.GetPersons();
+    }
     public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default)
     {
         return _db.GetVehicles();
     }
-    //public IEnumerable<IBooking> GetBookings();
+    public IEnumerable<IBooking> GetBookings()
+    {
+        return _db.GetBookings();
+    }
 }
