@@ -28,15 +28,15 @@
         @foreach (var Car in bp.GetVehicles())
             {
             <tr>
-            <th>@Car.regNum</th>
-            <td>@Car.make</td>
-            <td>@Car.odometer</td>
-            <td>@Car.costKM</td>
-            <td>@Car.vehicleType</td>
-            <td>@Car.dailyCost</td>
-            <td>
-                        <button class="btn btn-success">Available</button>
-            </td>
+                <th>@Car.regNum</th>
+                <td>@Car.make</td>
+                <td>@Car.odometer</td>
+                <td>@Car.costKM</td>
+                <td>@Car.vehicleTypes</td>
+                <td>@Car.vehicleTypesInt</td>
+                <td>
+                        <label class="btn btn-success" for="option2">@Car.status</label>
+                </td>
             </tr>
             }
                 
@@ -62,19 +62,20 @@
         </tr>
     </thead>
     <tbody>
-            @foreach (var Booking in bp.GetBookings())
+        @foreach (var Booking in bp.GetBookings())
             {
-                
-                <tr>
-                    <th>@Booking.RegNum</th>
-                    <td>@Booking.Customer</td>
-                    <td>@Booking.KmRented</td>
-                    <td>@Booking.KmReturned</td>
-                    <td>@Booking.RentedDate</td>
-                    <td>@Booking.ReturnDate</td>
-                    <td>@Booking.Cost</td>
-                    <td>@Booking.Status</td>
-                </tr>
+            <tr>
+                <th>@Booking.RegNum</th>
+                <td>@Booking.Customer</td>
+                <td>@Booking.KmRented</td>
+                <td>@Booking.KmReturned</td>
+                <td>@Booking.RentedDate</td>
+                <td>@Booking.ReturnDate</td>
+                <td>@</td>
+                <td>
+                        <label class="btn btn-danger" for="option2">@Booking.status</label>
+                </td>
+            </tr>
             }
     </tbody>
 </table>

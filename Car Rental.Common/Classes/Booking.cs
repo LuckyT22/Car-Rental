@@ -1,4 +1,5 @@
-﻿using Car_Rental.Common.Interfaces;
+﻿using Car_Rental.Common.Enums;
+using Car_Rental.Common.Interfaces;
 using System.Runtime.Intrinsics.X86;
 
 namespace Car_Rental.Common.Classes;
@@ -12,7 +13,18 @@ public class Booking : IBooking
     public string RentedDate { get; set; }
     public string? ReturnDate { get; set; }
     public int? Cost { get; set; }
-    public bool Status { get; set; }
-    public Booking(string regnum, string customer, int kmRented, int? kmReturned, string rentedDate, string? returnDate, int? cost, bool status) =>
-       (RegNum, Customer, KmRented, KmReturned, RentedDate, ReturnDate, Cost, Status) = (regnum, customer, kmRented, kmReturned, rentedDate, returnDate, cost, status);
+    public VechicleStatuses status { get; set; }
+    public VehicleTypes VehicleTypesDailyCost { get; set; }
+    
+    public Booking(string regnum, string customer, int kmRented, int? kmReturned, string rentedDate, string? returnDate, int? cost)
+    {
+        RegNum = regnum;
+        Customer = customer;
+        KmRented = kmRented;
+        KmReturned = kmReturned;
+        RentedDate = rentedDate;
+        ReturnDate = returnDate;
+        Cost = cost;
+        status = VechicleStatuses.Closed;
+    }
 }

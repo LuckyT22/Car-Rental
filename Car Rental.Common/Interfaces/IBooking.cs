@@ -1,4 +1,6 @@
-﻿namespace Car_Rental.Common.Interfaces;
+﻿using Car_Rental.Common.Enums;
+
+namespace Car_Rental.Common.Interfaces;
 
 public interface IBooking
 {
@@ -8,6 +10,5 @@ public interface IBooking
     public int? KmReturned { get; set; }
     public string RentedDate { get; set; }
     public string? ReturnDate { get; set; }
-    public int? Cost { get; set; }
-    public bool Status { get; set; }
+    public VechicleStatuses status { get; set; }
 }
