@@ -12,11 +12,10 @@ public class Booking : IBooking
     public int? KmReturned { get; set; }
     public string RentedDate { get; set; }
     public string? ReturnDate { get; set; }
-    public int? Cost { get; set; }
+    public int? VehicleTypesDailyCost { get; set; }
     public VechicleStatuses status { get; set; }
-    public VehicleTypes VehicleTypesDailyCost { get; set; }
     
-    public Booking(string regnum, string customer, int kmRented, int? kmReturned, string rentedDate, string? returnDate, int? cost)
+    public Booking(string regnum, string customer, int kmRented, int? kmReturned, string rentedDate, string? returnDate, int? dailyCost,VechicleStatuses Status)
     {
         RegNum = regnum;
         Customer = customer;
@@ -24,7 +23,7 @@ public class Booking : IBooking
         KmReturned = kmReturned;
         RentedDate = rentedDate;
         ReturnDate = returnDate;
-        Cost = cost;
-        status = VechicleStatuses.Closed;
+        VehicleTypesDailyCost = dailyCost;
+        status = Status;
     }
 }

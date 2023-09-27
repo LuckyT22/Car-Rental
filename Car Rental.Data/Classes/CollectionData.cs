@@ -16,13 +16,13 @@ public class collectionData : IData
 
     void SeedData()
     {
-        _vehicles.Add(new Car("ABC123", "Volvo", 10000, 1, VehicleTypes.Combi, (int)VehicleTypes.Combi));
-        _vehicles.Add(new Car("DEF456", "Saab", 20000, 1, VehicleTypes.Sedan, (int)VehicleTypes.Sedan));
-        _vehicles.Add(new Car("GHI789", "Tesla", 1000, 3, VehicleTypes.Sedan, (int)VehicleTypes.Sedan));
-        _vehicles.Add(new Car("JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, (int)VehicleTypes.Van));
-        _vehicles.Add(new Motorcycle("MNO234", "Yamaha", 30000, 0.5, VehicleTypes.Motorcycle, (int)VehicleTypes.Motorcycle));
-        _bookings.Add(new Booking("GHI789", "Doe John (12345)", 1000, null, DateTime.Now.ToString("d/M/yyyy"), null, null));
-        _bookings.Add(new Booking("JKL012", "Doe Jane (98765)", 5000, 5000, DateTime.Now.ToString("d/M/yyyy"), DateTime.Now.ToString("d/M/yyyy"), 300));
+        _vehicles.Add(new Car("ABC123", "Volvo", 10000, 1, VehicleTypes.Combi, (int)VehicleTypes.Combi, VechicleStatuses.Available));
+        _vehicles.Add(new Car("DEF456", "Saab", 20000, 1, VehicleTypes.Sedan, (int)VehicleTypes.Sedan, VechicleStatuses.Available));
+        _vehicles.Add(new Car("GHI789", "Tesla", 1000, 3, VehicleTypes.Sedan, (int)VehicleTypes.Sedan, VechicleStatuses.Booked));
+        _vehicles.Add(new Car("JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van, (int)VehicleTypes.Van, VechicleStatuses.Available));
+        _vehicles.Add(new Motorcycle("MNO234", "Yamaha", 30000, 0.5, VehicleTypes.Motorcycle, (int)VehicleTypes.Motorcycle, VechicleStatuses.Available));
+        _bookings.Add(new Booking("GHI789", "Doe John (12345)", 1000, null, DateTime.Now.ToString("d/M/yyyy"), null, null, VechicleStatuses.Open));
+        _bookings.Add(new Booking("JKL012", "Doe Jane (98765)", 5000, 5000, DateTime.Now.ToString("d/M/yyyy"), DateTime.Now.ToString("d/M/yyyy"), (int)VehicleTypes.Van, VechicleStatuses.Closed));
         _persons.Add(new Customer("John", "Doe", 12345));
         _persons.Add(new Customer("Jane", "Doe", 98765));
     }

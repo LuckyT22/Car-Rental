@@ -12,7 +12,7 @@ public class Car : IVehicle
     public VehicleTypes vehicleTypes { get; set; }
     public int vehicleTypesInt { get; set; }
     public VechicleStatuses status { get; set; }
-    public Car(string RegNum, string Make, int Odometer, double CostKM, VehicleTypes type, int VehicleTypesInt)
+    public Car(string RegNum, string Make, int Odometer, double CostKM, VehicleTypes type, int VehicleTypesInt, VechicleStatuses Status)
     {
         regNum = RegNum;
         make = Make;
@@ -20,6 +20,7 @@ public class Car : IVehicle
         costKM = CostKM;
         vehicleTypes = type;
         vehicleTypesInt = (int)vehicleTypes;
-        status = VechicleStatuses.Available;
+        status = Status;
+
     }
 }

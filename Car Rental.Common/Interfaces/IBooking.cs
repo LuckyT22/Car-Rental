@@ -11,4 +11,6 @@ public interface IBooking
     public string RentedDate { get; set; }
     public string? ReturnDate { get; set; }
     public VechicleStatuses status { get; set; }
+    public int? VehicleTypesDailyCost { get; set; }
+
 }
