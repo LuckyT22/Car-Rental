@@ -6,24 +6,30 @@ namespace Car_Rental.Common.Classes;
 
 public class Booking : IBooking
 {
+    public int Id { get; set; }
+    public IVehicle Vehicle { get; set; }
+    public IPerson Customer { get; set; }
     public string RegNum { get; set; }
-    public string Customer { get; set; }
-    public int KmRented { get; set; }
-    public int? KmReturned { get; set; }
-    public string RentedDate { get; set; }
+    public double Odometer { get; set; }
+    public double? Distance { get; set; }
+    public string? RentedDate { get; set; }
     public string? ReturnDate { get; set; }
-    public int? VehicleTypesDailyCost { get; set; }
     public VechicleStatuses status { get; set; }
-    
-    public Booking(string regnum, string customer, int kmRented, int? kmReturned, string rentedDate, string? returnDate, int? dailyCost,VechicleStatuses Status)
+    public int? dailyCost { get; set; }
+
+    public Booking(int id, IVehicle vehicle, IPerson customer)
     {
-        RegNum = regnum;
+        Id = id;
+        Vehicle = vehicle;
         Customer = customer;
-        KmRented = kmRented;
-        KmReturned = kmReturned;
-        RentedDate = rentedDate;
-        ReturnDate = returnDate;
-        VehicleTypesDailyCost = dailyCost;
-        status = Status;
+        RegNum = vehicle.regNum;
+        Odometer = vehicle.odometer;
+        dailyCost = vehicle.dailyCost;
+        RentedDate = DateTime.Now.ToString("d/M/yyyy");
+        Distance = vehicle.costKM;
+    }
+    public Booking()
+    {
+        
     }
 }

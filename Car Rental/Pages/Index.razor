@@ -21,27 +21,51 @@
                 <th>Cost Km</th>
                 <th>Vehicle Type</th>
                 <th>$ Day</th>
+                <th>Action</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-        @foreach (var Car in bp.GetVehicles())
+            <tr>
+                <th><input class="form-control form-control-sm" type="text" placeholder="RegNum" @bind="bp.EmptyVehicle.regNum" aria-label=".form-control-sm example"></th>
+                <th><input class="form-control form-control-sm" type="text" placeholder="Make" @bind="bp.EmptyVehicle.make" aria-label=".form-control-sm example"></th>
+                <th><input class="form-control form-control-sm" type="text" placeholder="0" @bind="bp.EmptyVehicle.odometer" aria-label=".form-control-sm example"></th>
+                <th><input class="form-control form-control-sm" type="text" placeholder="0" @bind="bp.EmptyVehicle.costKM" aria-label=".form-control-sm example"></th>
+                <th> <select class="form-select " @bind="bp.EmptyVehicle.type">
+                        @foreach (var VehicleType in bp.VehicleTypeNames)
+                        {
+                            @VehicleType<option value="@bp.GetVehicleType(VehicleType)" >@VehicleType</option>
+                        }
+                </select>
+                </th>
+                <th></th>
+                <th><button class="btn btn-outline-success btn-sm " @onclick="()=>bp.AddVehicle(bp.EmptyVehicle.make, bp.EmptyVehicle.regNum, bp.EmptyVehicle.odometer, bp.EmptyVehicle.costKM, bp.EmptyVehicle.type, bp.EmptyVehicle.status)">Add</button></th>
+            </tr>
+        @foreach (var Vehicles in bp.GetVehicles())
             {
             <tr class="flex-wrap">
-                <th>@Car.regNum</th>
-                <td>@Car.make</td>
-                <td>@Car.odometer</td>
-                <td>@Car.costKM</td>
-                <td>@Car.vehicleTypes</td>
-                <td>@Car.vehicleTypesInt</td>
-                <td>
-                        <label class=@(Car.status == VechicleStatuses.Booked ? "btn btn-danger rounded-pill btn-sm" : "btn btn-dark btn-sm rounded-pill")>@Car.status</label>
+                <th>@Vehicles.regNum</th>
+                <td>@Vehicles.make</td>
+                <td>@Vehicles.odometer</td>
+                <td>@Vehicles.costKM</td>
+                <td>@Vehicles.type</td>
+                <td>@Vehicles.dailyCost</td>
+                    <th>
+                        <select class="form-select">
+                            @foreach (var Customer in bp.GetCustomers())
+                            {
+                                <option value="@Customer.Id">@Customer.FirstName @Customer.LastName @Customer.SSN</option>
+                            }
+                        </select>
+                    </th>
+                <td class="align-middle">
+                        <div class=@(Vehicles.status == VechicleStatuses.Booked ? "btn btn-danger rounded-pill btn-sm" : "btn btn-dark btn-sm rounded-pill")>@Vehicles.status</div>
                 </td>
             </tr>
             }
                 
-    </tbody>
-</table>
+        </tbody>
+    </table>
 </div>
 <br />
 <div class="row">
@@ -64,22 +88,29 @@
     <tbody>
         @foreach (var Booking in bp.GetBookings())
             {
-            <tr class="flex-wrap">
-                <th>@Booking.RegNum</th>
-                <td>@Booking.Customer</td>
-                <td>@Booking.KmRented</td>
-                <td>@Booking.KmReturned</td>
-                <td>@Booking.RentedDate</td>
-                <td>@Booking.ReturnDate</td>
-                <td>@Booking.VehicleTypesDailyCost</td>
-                <td>
-                        @* <label class="btn btn-danger" for="option2">@Booking.status</label> *@
-                        <label class=@(Booking.status == VechicleStatuses.Open ? "btn btn-danger rounded-pill btn-sm" : "btn btn-success rounded-pill btn-sm")>@Booking.status</label>
-                </td>
-            </tr>
+                <tr>
+                   <th>@Booking.Vehicle.regNum</th>
+                   <td></td>
+                   <td>@Booking.Odometer</td>
+                   <td>@Booking.Distance</td>
+                   <td>@Booking.RentedDate</td>
+                   <td>@Booking.ReturnDate</td>
+                   <td>@Booking.dailyCost</td>
+                    <td>
+                        @if (Booking.status == VechicleStatuses.Available)
+                        {
+                            <span class="badge bg-success">Available</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Booked</span>
+                        }
+                    </td>
+
+                </tr>
             }
     </tbody>
-</table>
+    </table>
 </div>
 <br />
 <div class="row">
@@ -87,17 +118,25 @@
 <h6>Customers</h6>
 
     <table class="table border border-secondary table table-hover table table-borderless">
-    <thead>
-        <tr>
-            <th>SSN</th>
-            <th>Last Name</th>
-            <th>First Name</th>
-        </tr>
-    </thead>
+        <thead>
+            <tr>
+                <th>SSN</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+            </tr>
+        </thead>
     <tbody>
+            <tr>
+                <th><input class="form-control form-control-sm" type="text" placeholder="SSN" @bind="bp.EmptyCustomer.SSN" aria-label=".form-control-sm example"></th>
+                <th><input class="form-control form-control-sm" type="text" placeholder="Last Name" @bind="bp.EmptyCustomer.LastName" aria-label=".form-control-sm example"></th>
+                <th><input class="form-control form-control-sm" type="text" placeholder="First Name" @bind="bp.EmptyCustomer.FirstName" aria-label=".form-control-sm example"></th>
+                <th><button class="btn btn-outline-success btn-sm" @onclick="()=>bp.AddCustomer(bp.EmptyCustomer.SSN, bp.EmptyCustomer.FirstName, bp.EmptyCustomer.LastName)">Add</button></th>
+
+            </tr>
             @foreach (var Customer in bp.GetCustomers())
             {
                 <tr>
+                    
                     <th>@Customer.SSN</th>
                     <td>@Customer.LastName</td>
                     <td>@Customer.FirstName</td>
@@ -105,7 +144,5 @@
                 
             }
     </tbody>
-</table>
+    </table>
 </div>
-
-
