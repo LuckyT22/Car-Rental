@@ -50,20 +50,40 @@
                 <td>@Vehicles.costKM</td>
                 <td>@Vehicles.type</td>
                 <td>@Vehicles.dailyCost</td>
-                    <th>
-                        <select class="form-select">
-                            @foreach (var Customer in bp.GetCustomers())
-                            {
-                                <option value="@Customer.Id">@Customer.FirstName @Customer.LastName @Customer.SSN</option>
-                            }
-                        </select>
-                    </th>
-                <td class="align-middle">
-                        <div class=@(Vehicles.status == VechicleStatuses.Booked ? "btn btn-danger rounded-pill btn-sm" : "btn btn-dark btn-sm rounded-pill")>@Vehicles.status</div>
+                <td>
+                    @if (Vehicles.status.Equals(VehicleStatuses.Available))
+                    {
+                        <div class="input-group-sm d-flex">
+                            <select class="form-select border border-dark" @bind=bp.EmptyCustomer.Id>
+                                <option value="" selected></option>
+                                @foreach (var Customer in bp.GetCustomers())
+                                {
+                                    <option value="@Customer.Id">@Customer.FirstName @Customer.LastName @Customer.SSN</option>
+                                }
+                            </select>
+                            <button class="btn btn-outline-info" @onclick="()=>bp.RentVehicle(Vehicles.Id, bp.EmptyCustomer.Id)">Rent</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="input-group-sm d-flex">
+                            <input @bind="bp.EmptyBooking.Distance" class="small rounded-2" placeholder="Distance" />
+                            <button class="btn-sm btn btn-outline-info" @onclick="()=>bp.ReturnVehicle(Vehicles.Id, bp.EmptyBooking.Distance)">Return</button>
+                        </div>
+                    }
+                </td>
+                <td>
+                    @if (@Vehicles.status.Equals(VehicleStatuses.Booked))
+                        {
+                            <span class="badge rounded-pill bg-danger">@Vehicles.status</span>
+                        }
+                        else
+                        {
+                            <span class="badge rounded-pill bg-dark">@Vehicles.status</span>
+                        }
                 </td>
             </tr>
             }
-                
         </tbody>
     </table>
 </div>
@@ -89,24 +109,30 @@
         @foreach (var Booking in bp.GetBookings())
             {
                 <tr>
-                   <th>@Booking.Vehicle.regNum</th>
-                   <td></td>
+                   <td>@Booking.Vehicle.regNum</td>
+                   <td>@Booking.Customer.SSN @Booking.Customer.LastName @Booking.Customer.FirstName</td>
                    <td>@Booking.Odometer</td>
                    <td>@Booking.Distance</td>
-                   <td>@Booking.RentedDate</td>
-                   <td>@Booking.ReturnDate</td>
-                   <td>@Booking.dailyCost</td>
-                    <td>
-                        @if (Booking.status == VechicleStatuses.Available)
-                        {
-                            <span class="badge bg-success">Available</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-danger">Booked</span>
-                        }
-                    </td>
-
+                   <td>@Booking.RentedDate.ToString("yyyy-MM-dd")</td>
+                    @if (Booking.ReturnDate < Booking.RentedDate)
+                    {
+                        <td></td>
+                    }
+                    else
+                    {
+                        <td>@Booking.ReturnDate.ToString("yyyy-MM-dd")</td>
+                    }
+                   <td>@Booking.TotalCost</td>
+                   <td>
+                       @if (Booking.status == VehicleStatuses.Available)
+                       {
+                           <span class="badge bg-success">Open</span>
+                       }
+                       else if (Booking.status == VehicleStatuses.Booked)
+                       {
+                           <span class="badge bg-danger">Closed</span>
+                       }
+                   </td>
                 </tr>
             }
     </tbody>
@@ -131,7 +157,6 @@
                 <th><input class="form-control form-control-sm" type="text" placeholder="Last Name" @bind="bp.EmptyCustomer.LastName" aria-label=".form-control-sm example"></th>
                 <th><input class="form-control form-control-sm" type="text" placeholder="First Name" @bind="bp.EmptyCustomer.FirstName" aria-label=".form-control-sm example"></th>
                 <th><button class="btn btn-outline-success btn-sm" @onclick="()=>bp.AddCustomer(bp.EmptyCustomer.SSN, bp.EmptyCustomer.FirstName, bp.EmptyCustomer.LastName)">Add</button></th>
-
             </tr>
             @foreach (var Customer in bp.GetCustomers())
             {

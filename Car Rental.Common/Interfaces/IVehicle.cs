@@ -10,6 +10,8 @@ public interface IVehicle
     public double costKM { get; set; }
     public VehicleTypes type { get; set; }
     public int dailyCost { get; set; }
-    public VechicleStatuses status { get; set; }
+    public VehicleStatuses status { get; set; }
     public int Id { get; set; }
+    public void ChangeStatus(VehicleStatuses stat);
+    public void UpdateOdometer(double km);
 }

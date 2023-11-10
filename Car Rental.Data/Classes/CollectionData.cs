@@ -19,7 +19,7 @@ public class CollectionData : IData
     public int NextPersonId => _persons.Count.Equals(0) ? 1 : _persons.Max(b => b.Id) + 1;
     public int NextBookingId => _bookings.Count.Equals(0) ? 1 : _bookings.Max(b => b.Id) + 1;
 
-    public string[] VehicleStatusNames => Enum.GetNames(typeof(VechicleStatuses)); //Retunera enum konstanterna
+    public string[] VehicleStatusNames => Enum.GetNames(typeof(VehicleStatuses)); //Retunera enum konstanterna
     public string[] VehicleTypeNames => Enum.GetNames(typeof(VehicleTypes)); //Retunera enum konstanterna
     public VehicleTypes GetVehicleType(string name) =>
         (VehicleTypes)Enum.Parse(typeof(VehicleTypes), name, true); /*Retunera en enum konstants värde med hjälp av konstantens namn*/
@@ -30,11 +30,11 @@ public class CollectionData : IData
     {
         //Vehicles
 
-        _vehicles.Add(new Car(1, "ABC123", "Volvo", 10000, 1, VehicleTypes.Combi, VechicleStatuses.Available));
-        _vehicles.Add(new Car(2,"DEF456", "Saab", 20000, 1, VehicleTypes.Sedan, VechicleStatuses.Available));
-        _vehicles.Add(new Car(3,"GHI789", "Tesla", 1000, 3, VehicleTypes.Sedan, VechicleStatuses.Available));
-        _vehicles.Add(new Car(4, "JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van,  VechicleStatuses.Available));
-        _vehicles.Add(new Motorcycle(5, "MNO234", "Yamaha", 30000, 0.5, VehicleTypes.Motorcycle, VechicleStatuses.Available));
+        _vehicles.Add(new Car(1, "ABC123", "Volvo", 10000, 1, VehicleTypes.Combi, VehicleStatuses.Available));
+        _vehicles.Add(new Car(2,"DEF456", "Saab", 20000, 1, VehicleTypes.Sedan, VehicleStatuses.Available));
+        _vehicles.Add(new Car(3,"GHI789", "Tesla", 1000, 3, VehicleTypes.Sedan, VehicleStatuses.Available));
+        _vehicles.Add(new Car(4, "JKL012", "Jeep", 5000, 1.5, VehicleTypes.Van,  VehicleStatuses.Available));
+        _vehicles.Add(new Motorcycle(5, "MNO234", "Yamaha", 30000, 0.5, VehicleTypes.Motorcycle, VehicleStatuses.Available));
             
         //Customers
         
@@ -70,28 +70,38 @@ public class CollectionData : IData
         }
         else
         {
-            throw new InvalidOperationException("Du suger");
+            throw new InvalidOperationException("Could not find type");
         }
     }
-    public IBooking? RentVehicle(int vehicleId, int customerId)
+    public IBooking RentVehicle(int vehicleId, int customerId)
     {
-        IVehicle? vehicle = _vehicles.SingleOrDefault(v => v.Id == vehicleId);
-        IPerson? customer = _persons.SingleOrDefault(c => c.Id == customerId);
+        var vehicle = _vehicles.SingleOrDefault(v => v.Id == vehicleId);
+        var customer = _persons.SingleOrDefault(c => c.Id == customerId);
         Booking newB = new Booking(NextBookingId, vehicle, customer);
-        if (vehicle != null && customer != null)
+
+        if (vehicle is not null && customer is not null)
         {
-            if (vehicle.status == VechicleStatuses.Available)
+            foreach (var booking in _bookings)
             {
-                double startOdor = vehicle.odometer;
-                IBooking booking = new Booking();
-                _bookings.Add(booking);
-                return booking;
+                if (booking.Vehicle.regNum == newB.RegNum && booking.Vehicle.status == VehicleStatuses.Available)
+                {
+                    newB.Vehicle.status = VehicleStatuses.Booked;
+                }
+                else
+                {
+                    continue;
+                }
             }
+            return newB; 
         }
-        return null;
+        else
+        {
+            throw new Exception("Vehicle is shit");
+        }
     }
-    public void Add<T>(T item)
+    public async Task Add<T>(T item)
     {
+        await Task.Delay(2000);
         try
         {
             FieldInfo? info = GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic).FirstOrDefault(f => f.FieldType == typeof(List<T>));
@@ -110,9 +120,24 @@ public class CollectionData : IData
             throw new Exception();
         }
     }
-    public IBooking? ReturnVehicle(int vehicleId)
+    public IBooking ReturnVehicle(int vehicleId)
     {
-        return null;
+        try
+        {
+            var newB = Single<IBooking>(b => b.Vehicle.Id == vehicleId && b.isOpen == true);
+            if (newB is not null)
+            {
+                return newB;
+            }
+            else
+            {
+                throw new ArgumentNullException("Booking could not be found");
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception();
+        }
     }
     public IEnumerable<IPerson> GetPersons() => _persons;
     public IEnumerable<IBooking> GetBookings() => _bookings;

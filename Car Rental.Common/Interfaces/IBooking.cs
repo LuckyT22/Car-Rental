@@ -8,9 +8,13 @@ public interface IBooking
     public IVehicle Vehicle { get; set; }
     public IPerson Customer { get; set; }
     public double Odometer { get; set; }
-    public double? Distance { get; set; }
-    public string? RentedDate { get; set; }
-    public string? ReturnDate { get; set; }
-    public VechicleStatuses status { get; set; }
-    public int? dailyCost { get; set; }
+    public double Distance { get; set; }
+    public DateTime RentedDate { get; set; }
+    public DateTime ReturnDate { get; set; }
+    public VehicleStatuses status { get; set; }
+    public double kmCost { get; set; }
+    public double dailyCost { get; set; }
+    public bool isOpen { get; set; }
+    public double TotalCost { get; set; }
+    public double ReturnVehicle(IVehicle vehicle, double distance);
 }

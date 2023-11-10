@@ -11,6 +11,18 @@ public class Vehicle : IVehicle
     public double costKM { get; set; }
     public VehicleTypes type { get; set; }
     public int dailyCost { get; set; }
-    public VechicleStatuses status { get; set; }
+    public VehicleStatuses status { get; set; }
     public int Id { get; set; }
+    public void UpdateOdometer(double km) => odometer += km;
+    public void ChangeStatus(VehicleStatuses stat)
+    {
+        if (stat == VehicleStatuses.Available)
+        {
+            status = VehicleStatuses.Booked;
+        }
+        else
+        {
+            status = VehicleStatuses.Available;
+        }
+    }
 }

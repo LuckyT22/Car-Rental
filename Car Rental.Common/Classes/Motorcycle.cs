@@ -5,7 +5,7 @@ namespace Car_Rental.Common.Classes;
 
 public class Motorcycle : Vehicle
 {
-    public Motorcycle(int id, string RegNum, string Make, double Odometer, double CostKM, VehicleTypes Type, VechicleStatuses Status)
+    public Motorcycle(int id, string RegNum, string Make, double Odometer, double CostKM, VehicleTypes Type, VehicleStatuses Status)
     {
         Id = Id;
         regNum = RegNum;

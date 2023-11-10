@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Car_Rental.Common.Enums
 {
-    public enum VechicleStatuses
+    public enum VehicleStatuses
     {
-        Available, 
-        Booked, 
-        Open, 
-        Closed
+        Available,
+        Booked
     }
 }
